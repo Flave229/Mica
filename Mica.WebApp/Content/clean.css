@@ -139,7 +139,7 @@ hr.small {
 }
 .intro-header {
   background-color: #777777;
-  background: no-repeat center center;
+  background: no-repeat center center hsla(180,0%,0%,0.5);
   background-attachment: scroll;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -215,6 +215,9 @@ hr.small {
     font-size: 30px;
   }
 }
+.post-preview {
+  text-align: center;
+}
 .post-preview > a {
   color: #333333;
 }
@@ -232,6 +235,9 @@ hr.small {
   margin: 0;
   font-weight: 300;
   margin-bottom: 10px;
+}
+.post-meta {
+    margin: 10px 0 10px 0;
 }
 .post-preview > .post-meta {
   color: #777777;
@@ -329,6 +335,7 @@ footer .copyright {
 }
 form .row:first-child .floating-label-form-group {
   border-top: 1px solid #eeeeee;
+    text-align: center;
 }
 .btn {
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
