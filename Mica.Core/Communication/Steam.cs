@@ -7,15 +7,29 @@ using RestSharp;
 
 namespace Mica.Communication
 {
-    public class Steam
+    public interface ISteamClient
     {
+        IRestResponse Connect(string resource);
+        SteamGameStats GetUserAchievementsForGame(string appId, string userId);
+        SteamGameInfo GetInfoForGame(string appId);
+    }
+
+    public class SteamClient : ISteamClient
+    {
+        private readonly string _authKey;
+
+        public SteamClient()
+        {
+            _authKey = GetAuthKey();
+        }
+
         private static string GetAuthKey()
         {
             var authFileContents = File.ReadAllLines((AppDomain.CurrentDomain.BaseDirectory + @"Auth\AuthKey.txt"));
             return string.Join("", authFileContents);
         }
 
-        private IRestResponse Connect(string resource)
+        public IRestResponse Connect(string resource)
         {
             var client = new RestClient("http://api.steampowered.com");
             var request = new RestRequest(resource, Method.GET);
@@ -23,28 +37,20 @@ namespace Mica.Communication
             return client.Execute(request);
         }
 
-        public string GetUserAchievementsForGame(int appId, string userId)
+        public SteamGameStats GetUserAchievementsForGame(string appId, string userId)
         {
-            appId = 292030;
-            //appId = 211420;
-            userId = "76561198040630790";
-            var authKey = GetAuthKey();
-            
-            var userStatsResponse = Connect($"ISteamUserStats/GetPlayerAchievements/v0001/?appid={appId}&key={authKey}&steamid={userId}");
+            var userStatsResponse = Connect($"ISteamUserStats/GetPlayerAchievements/v0001/?appid={appId}&key={_authKey}&steamid={userId}");
             var userStats = JsonConvert.DeserializeObject<SteamGameStats>(userStatsResponse.Content);
+            
+            return userStats;
+        }
 
-            var gameInfoResponse = Connect($"ISteamUserStats/GetSchemaForGame/v2/?appid={appId}&key={authKey}");
+        public SteamGameInfo GetInfoForGame(string appId)
+        {
+            var gameInfoResponse = Connect($"ISteamUserStats/GetSchemaForGame/v2/?appid={appId}&key={_authKey}");
             var gameInfo = JsonConvert.DeserializeObject<SteamGameInfo>(gameInfoResponse.Content);
 
-            foreach (var achievement in userStats.playerstats.achievements)
-            {
-                if (achievement.achieved == 1)
-                    continue;
-
-                gameInfo.game.availableGameStats.achievements.RemoveAll(x => x.name == achievement.apiname);
-            }
-
-            return "";
+            return gameInfo;
         }
     }
 }

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mica.Core", "Mica.Core\Mica
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mica.WebApp", "Mica.WebApp\Mica.WebApp.csproj", "{B16D96E2-71EB-4650-9AEB-933F30426B01}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mica.Tests", "Mica.Tests\Mica.Tests.csproj", "{22DBF6EF-1920-4170-80AA-45E7048FEF5B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{B16D96E2-71EB-4650-9AEB-933F30426B01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B16D96E2-71EB-4650-9AEB-933F30426B01}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B16D96E2-71EB-4650-9AEB-933F30426B01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22DBF6EF-1920-4170-80AA-45E7048FEF5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22DBF6EF-1920-4170-80AA-45E7048FEF5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22DBF6EF-1920-4170-80AA-45E7048FEF5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22DBF6EF-1920-4170-80AA-45E7048FEF5B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
