@@ -1,0 +1,5 @@
+E:\Users\Flave\Personal Docs\Projects\Mica\Mica\bin\Debug\Mica.dll
+E:\Users\Flave\Personal Docs\Projects\Mica\Mica\bin\Debug\Mica.pdb
+E:\Users\Flave\Personal Docs\Projects\Mica\Mica\obj\Debug\Mica.Core.csprojResolveAssemblyReference.cache
+E:\Users\Flave\Personal Docs\Projects\Mica\Mica\obj\Debug\Mica.dll
+E:\Users\Flave\Personal Docs\Projects\Mica\Mica\obj\Debug\Mica.pdb
