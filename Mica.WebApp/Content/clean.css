@@ -215,9 +215,6 @@ hr.small {
     font-size: 30px;
   }
 }
-.post-preview {
-  text-align: center;
-}
 .post-preview > a {
   color: #333333;
 }

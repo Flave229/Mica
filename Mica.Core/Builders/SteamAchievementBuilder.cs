@@ -27,13 +27,15 @@ namespace Mica.Core.Builders
                 if (achievement.achieved == 0)
                     continue;
 
+                var achievementInfo = gameInfo.game.availableGameStats.achievements.FirstOrDefault(x => x.name == achievement.apiname);
+
                 earnedAchievements.Add(new Achievement
                 {
-                    AchievementName = gameInfo.game.availableGameStats.achievements.FirstOrDefault(x => x.name == achievement.apiname)?.displayName,
+                    AchievementName = achievementInfo?.displayName,
+                    GameName = achievements.playerstats.gameName,
                     AchievementUrl = $"http://steamcommunity.com/id/flave_229/stats/{appId}/achievements/",
-                    GameName = achievements.playerstats.gameName
+                    IconUrl = achievementInfo?.icon
                 });
-                gameInfo.game.availableGameStats.achievements.RemoveAll(x => x.name == achievement.apiname);
             }
 
             return earnedAchievements;
