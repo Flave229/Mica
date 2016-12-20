@@ -30,6 +30,7 @@ namespace Mica.Core.Builders
                 earnedAchievements.Add(new Achievement
                 {
                     AchievementName = gameInfo.game.availableGameStats.achievements.FirstOrDefault(x => x.name == achievement.apiname)?.displayName,
+                    AchievementUrl = $"http://steamcommunity.com/id/flave_229/stats/{appId}/achievements/",
                     GameName = achievements.playerstats.gameName
                 });
                 gameInfo.game.availableGameStats.achievements.RemoveAll(x => x.name == achievement.apiname);
