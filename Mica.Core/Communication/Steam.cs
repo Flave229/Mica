@@ -1,5 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
+using Mica.Communication.Models;
+using Newtonsoft.Json;
 using RestSharp;
 
 namespace Mica.Communication
@@ -20,16 +23,28 @@ namespace Mica.Communication
             return client.Execute(request);
         }
 
-        public string GetAchievementsForGame(int appId, string userId)
+        public string GetUserAchievementsForGame(int appId, string userId)
         {
-            appId = 211420;
+            appId = 292030;
+            //appId = 211420;
             userId = "76561198040630790";
             var authKey = GetAuthKey();
-
-            var userStats = Connect($"ISteamUserStats/GetUserStatsForGame/v0002/?appid={appId}&key={authKey}&steamid={userId}");
-            var gameInfo = Connect($"ISteamUserStats/GetSchemaForGame/v2/?appid={appId}&key={authKey}");
             
-            return userStats.Content;
+            var userStatsResponse = Connect($"ISteamUserStats/GetPlayerAchievements/v0001/?appid={appId}&key={authKey}&steamid={userId}");
+            var userStats = JsonConvert.DeserializeObject<SteamGameStats>(userStatsResponse.Content);
+
+            var gameInfoResponse = Connect($"ISteamUserStats/GetSchemaForGame/v2/?appid={appId}&key={authKey}");
+            var gameInfo = JsonConvert.DeserializeObject<SteamGameInfo>(gameInfoResponse.Content);
+
+            foreach (var achievement in userStats.playerstats.achievements)
+            {
+                if (achievement.achieved == 1)
+                    continue;
+
+                gameInfo.game.availableGameStats.achievements.RemoveAll(x => x.name == achievement.apiname);
+            }
+
+            return "";
         }
     }
 }

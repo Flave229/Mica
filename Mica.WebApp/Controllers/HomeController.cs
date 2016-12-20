@@ -7,7 +7,7 @@ namespace WebApplication1.Controllers
     {
         public ActionResult Index()
         {
-            var test = new Steam().GetAchievementsForGame(0, "");
+            var test = new Steam().GetUserAchievementsForGame(0, "");
             return View();
         }
 
