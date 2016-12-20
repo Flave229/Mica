@@ -1,4 +1,6 @@
-﻿<body>
+﻿@model List<Mica.Core.Models.Achievement>
+
+<body>
     <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -43,30 +45,15 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12 col-md-12">
-                <div class="post-preview">
-                    <a href="#">
-                        <p class="post-meta">Posted by Test Post 1</p>
-                    </a>
-                </div>
-                <hr>
-                <div class="post-preview">
-                    <a href="#">
-                        <p class="post-meta">Posted by Test Post 2</p>
-                    </a>
-                </div>
-                <hr>
-                <div class="post-preview">
-                    <a href="#">
-                        <p class="post-meta">Posted by Test Post 3</p>
-                    </a>
-                </div>
-                <hr>
-                <div class="post-preview">
-                    <a href="#">
-                        <p class="post-meta">Posted by Test Post 4</p>
-                    </a>
-                </div>
-                <hr>
+                @foreach (var achievement in Model)
+                {
+                    <div class="post-preview">
+                        <a href="#">
+                            <p class="post-meta">Earned the achievement "@achievement.AchievementName" in "@achievement.GameName"</p>
+                        </a>
+                    </div>
+                    <hr>
+                }
                 <!-- Pager -->
                 <ul class="pager">
                     <li class="next">

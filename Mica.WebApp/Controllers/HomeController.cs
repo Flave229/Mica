@@ -1,14 +1,15 @@
 ﻿using System.Web.Mvc;
-using Mica.Communication;
+using Mica.Core.Builders;
 
-namespace WebApplication1.Controllers
+namespace Mica.WebApp.Controllers
 {
     public class HomeController : Controller
     {
         public ActionResult Index()
         {
-            var test = new SteamClient().GetUserAchievementsForGame(0, "");
-            return View();
+            var test = new SteamAchievementBuilder();
+            var model = test.Build("292030", "76561198040630790");
+            return View(model);
         }
 
         public ActionResult About()

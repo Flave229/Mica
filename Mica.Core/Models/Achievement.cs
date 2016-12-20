@@ -1,4 +1,4 @@
-﻿namespace Mica.Tests.Models
+﻿namespace Mica.Core.Models
 {
     public class Achievement
     {

@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Mica.Builders;
 using Mica.Communication;
 using Mica.Communication.Models;
-using Mica.Tests.Models;
+using Mica.Core.Builders;
+using Mica.Core.Models;
 using Moq;
 using NUnit.Framework;
 

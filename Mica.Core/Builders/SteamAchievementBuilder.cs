@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Mica.Communication;
-using Mica.Tests.Models;
+using Mica.Core.Models;
 
-namespace Mica.Builders
+namespace Mica.Core.Builders
 {
     public class SteamAchievementBuilder
     {
@@ -18,9 +18,6 @@ namespace Mica.Builders
 
         public List<Achievement> Build(string appId, string userId)
         {
-            //appId = "292030";
-            //userId = "76561198040630790";
-
             var achievements = _steamClient.GetUserAchievementsForGame(appId, userId);
             var gameInfo = _steamClient.GetInfoForGame(appId);
             var earnedAchievements = new List<Achievement>();
