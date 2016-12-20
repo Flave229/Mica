@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mica", "Mica\Mica.csproj", "{0030E21D-E02D-4A75-B6A2-0C4EEBF74B38}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mica.Core", "Mica\Mica.Core.csproj", "{0030E21D-E02D-4A75-B6A2-0C4EEBF74B38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mica.WebApp", "Mica.WebApp\Mica.WebApp.csproj", "{B16D96E2-71EB-4650-9AEB-933F30426B01}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{0030E21D-E02D-4A75-B6A2-0C4EEBF74B38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0030E21D-E02D-4A75-B6A2-0C4EEBF74B38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0030E21D-E02D-4A75-B6A2-0C4EEBF74B38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B16D96E2-71EB-4650-9AEB-933F30426B01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B16D96E2-71EB-4650-9AEB-933F30426B01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B16D96E2-71EB-4650-9AEB-933F30426B01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B16D96E2-71EB-4650-9AEB-933F30426B01}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
