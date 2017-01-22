@@ -1,11 +1,10 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
-using Mica.Communication.Models;
+using Mica.Core.Communication.Models;
 using Newtonsoft.Json;
 using RestSharp;
 
-namespace Mica.Communication
+namespace Mica.Core.Communication
 {
     public interface ISteamClient
     {

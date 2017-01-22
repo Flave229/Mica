@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Mica.Communication.Models
+namespace Mica.Core.Communication.Models
 {
     public class SteamGameInfo
     {

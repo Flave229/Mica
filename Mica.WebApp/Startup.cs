@@ -1,8 +1,9 @@
-﻿using Microsoft.Owin;
+﻿using Mica.WebApp;
+using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(WebApplication1.Startup))]
-namespace WebApplication1
+[assembly: OwinStartup(typeof(Startup))]
+namespace Mica.WebApp
 {
     public partial class Startup
     {

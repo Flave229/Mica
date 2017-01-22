@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Mica.Communication;
-using Mica.Communication.Models;
 using Mica.Core.Builders;
+using Mica.Core.Communication;
+using Mica.Core.Communication.Models;
 using Mica.Core.Models;
 using Moq;
 using NUnit.Framework;

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Mica.Communication;
+using Mica.Core.Communication;
 using Mica.Core.Models;
 
 namespace Mica.Core.Builders
