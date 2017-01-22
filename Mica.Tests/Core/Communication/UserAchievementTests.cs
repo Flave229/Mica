@@ -21,44 +21,25 @@ namespace Mica.Tests.Core.Communication
             steamClientMock.Setup(x => x.GetUserAchievementsForGame(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(new SteamGameStats
                 {
-                    playerstats = new PlayerStats
+                    Achievements =  new List<PlayerAchievement>
                     {
-                        achievements = new List<PlayerAchievement>
+                        new PlayerAchievement
                         {
-                            new PlayerAchievement
-                            {
-                                apiname = "Achievement1",
-                                achieved = 1
-                            },
-                            new PlayerAchievement
-                            {
-                                apiname = "Achievement2",
-                                achieved = 0
-                            }
+                            ApiName = "Achievement1",
+                            Name = "AchievementDisplayName1",
+                            AchievedTimestamp = "1483002574",
+                            Achieved = 1
+                        },
+                        new PlayerAchievement
+                        {
+                            ApiName = "Achievement2",
+                            Name = "AchievementDisplayName2",
+                            Achieved = 0
                         }
-                    }
-                });
-            steamClientMock.Setup(x => x.GetInfoForGame(It.IsAny<string>()))
-                .Returns(new SteamGameInfo()
-                {
-                    game = new SteamGame()
+                    },
+                    GameInfo = new GameInfo
                     {
-                        availableGameStats = new GameStats
-                        {
-                            achievements = new List<GameAchievements>()
-                            {
-                                new GameAchievements
-                                {
-                                    name = "Achievement1",
-                                    displayName = "AchievementDisplayName1"
-                                },
-                                new GameAchievements
-                                {
-                                    name = "Achievement2",
-                                    displayName = "AchievementDisplayName2"
-                                }
-                            }
-                        }
+                        Name = "GameName"
                     }
                 });
 

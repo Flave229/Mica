@@ -1,21 +1,52 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace Mica.Core.Communication.Models
 {
+    [Serializable]
+    [XmlRoot("playerstats")]
     public class SteamGameStats
     {
-        public PlayerStats playerstats { get; set; }
+        [XmlArray("achievements")]
+        [XmlArrayItem("achievement", typeof(PlayerAchievement))]
+        public List<PlayerAchievement> Achievements { get; set; }
+
+        [XmlElement("game", typeof(GameInfo))]
+        public GameInfo GameInfo { get; set; }
     }
 
-    public class PlayerStats
+    public class GameInfo
     {
-        public string gameName { get; set; }
-        public List<PlayerAchievement> achievements { get; set; }
+        [XmlElement("gameFriendlyName")]
+        public string ApplicationId { get; set; }
+
+        [XmlElement("gameName")]
+        public string Name { get; set; }
+
+        [XmlElement("gameIcon")]
+        public string IconUrl { get; set; }
     }
 
     public class PlayerAchievement
     {
-        public string apiname { get; set; }
-        public int achieved { get; set; }
+        [XmlElement("name")]
+        public string Name { get; set; }
+
+        [XmlElement("apiname")]
+        public string ApiName { get; set; }
+
+        [XmlElement("description")]
+        public string Description { get; set; }
+
+        [XmlElement("iconClosed")]
+        public string IconUrl { get; set; }
+
+        [XmlElement("unlockTimestamp")]
+        public string AchievedTimestamp { get; set; }
+
+        [XmlAttribute("closed")]
+        public int Achieved { get; set; }
     }
 }

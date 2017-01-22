@@ -8,7 +8,7 @@ namespace Mica.WebApp.Controllers
         public ActionResult Index()
         {
             var test = new SteamAchievementBuilder();
-            var model = test.Build("211420", "76561198040630790");
+            var model = test.Build("211420", "flave_229");
             return View(model);
         }
 

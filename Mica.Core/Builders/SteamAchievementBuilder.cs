@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Mica.Core.Communication;
 using Mica.Core.Models;
@@ -16,25 +17,23 @@ namespace Mica.Core.Builders
             _steamClient = steamClient;
         }
 
-        public List<Achievement> Build(string appId, string userId)
+        public List<Achievement> Build(string appId, string userName)
         {
-            var achievements = _steamClient.GetUserAchievementsForGame(appId, userId);
-            var gameInfo = _steamClient.GetInfoForGame(appId);
+            var achievements = _steamClient.GetUserAchievementsForGame(appId, userName);
             var earnedAchievements = new List<Achievement>();
 
-            foreach (var achievement in achievements.playerstats.achievements)
+            foreach (var achievement in achievements.Achievements)
             {
-                if (achievement.achieved == 0)
+                if (achievement.Achieved == 0)
                     continue;
-
-                var achievementInfo = gameInfo.game.availableGameStats.achievements.FirstOrDefault(x => x.name == achievement.apiname);
 
                 earnedAchievements.Add(new Achievement
                 {
-                    AchievementName = achievementInfo?.displayName,
-                    GameName = achievements.playerstats.gameName,
+                    AchievementName = achievement.Name,
+                    GameName = achievements.GameInfo.Name,
                     AchievementUrl = $"http://steamcommunity.com/id/flave_229/stats/{appId}/achievements/",
-                    IconUrl = achievementInfo?.icon
+                    IconUrl = achievement.IconUrl,
+                    Achieved = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).AddSeconds(double.Parse(achievement.AchievedTimestamp))
                 });
             }
 
