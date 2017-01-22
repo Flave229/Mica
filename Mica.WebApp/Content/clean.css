@@ -216,6 +216,7 @@ hr.small {
   }
 }
 .post-preview > a {
+  text-align: center;
   color: #333333;
 }
 .post-preview > a:hover,
