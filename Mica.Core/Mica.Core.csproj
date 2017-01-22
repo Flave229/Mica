@@ -51,7 +51,7 @@
     <Compile Include="Builders\SteamAchievementBuilder.cs" />
     <Compile Include="Communication\ISteamClient.cs" />
     <Compile Include="Communication\Models\SteamGameInfo.cs" />
-    <Compile Include="Communication\Models\SteamGameStats.cs" />
+    <Compile Include="Communication\Models\PlayerStatsForGame.cs" />
     <Compile Include="Communication\SteamClient.cs" />
     <Compile Include="Communication\Models\VanityUrlInfo.cs" />
     <Compile Include="Communication\Models\VanityUrlResponse.cs" />

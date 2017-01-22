@@ -19,7 +19,7 @@ namespace Mica.Tests.Core.Communication
         {
             var steamClientMock = new Mock<ISteamClient>();
             steamClientMock.Setup(x => x.GetUserAchievementsForGame(It.IsAny<string>(), It.IsAny<string>()))
-                .Returns(new SteamGameStats
+                .Returns(new PlayerStatsForGame
                 {
                     Achievements =  new List<PlayerAchievement>
                     {

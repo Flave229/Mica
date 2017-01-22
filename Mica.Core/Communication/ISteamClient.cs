@@ -6,6 +6,7 @@ namespace Mica.Core.Communication
     public interface ISteamClient
     {
         IRestResponse Connect(string baseUrl, string resource);
-        SteamGameStats GetUserAchievementsForGame(string appId, string userId);
+        string GetSteam64IdCode(string vanityName);
+        PlayerStatsForGame GetUserAchievementsForGame(string appId, string userId);
     }
 }

@@ -7,7 +7,7 @@ namespace Mica.Core.Communication.Models
 {
     [Serializable]
     [XmlRoot("playerstats")]
-    public class SteamGameStats
+    public class PlayerStatsForGame
     {
         [XmlArray("achievements")]
         [XmlArrayItem("achievement", typeof(PlayerAchievement))]

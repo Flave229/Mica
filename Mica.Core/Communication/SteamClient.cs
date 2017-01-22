@@ -38,14 +38,14 @@ namespace Mica.Core.Communication
             return userCodeInfo.response.success == 0 ? "" : userCodeInfo.response.steamid;
         }
 
-        public SteamGameStats GetUserAchievementsForGame(string appId, string userName)
+        public PlayerStatsForGame GetUserAchievementsForGame(string appId, string userName)
         {
             var userStatsResponse = Connect("http://steamcommunity.com", $"id/{userName}/stats/{appId}/achievements/?xml=1");
-            var xmlSerializer = new XmlSerializer(typeof(SteamGameStats));
+            var xmlSerializer = new XmlSerializer(typeof(PlayerStatsForGame));
             
             using (TextReader reader = new StringReader(userStatsResponse.Content))
             {
-                return xmlSerializer.Deserialize(reader) as SteamGameStats;
+                return xmlSerializer.Deserialize(reader) as PlayerStatsForGame;
             }
         }
     }
