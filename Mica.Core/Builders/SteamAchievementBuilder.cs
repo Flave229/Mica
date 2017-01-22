@@ -37,7 +37,7 @@ namespace Mica.Core.Builders
                 });
             }
 
-            return earnedAchievements;
+            return earnedAchievements.OrderByDescending(x => x.Achieved).ToList();
         }
     }
 }
