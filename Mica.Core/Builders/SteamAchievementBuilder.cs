@@ -3,18 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using Mica.Core.Communication;
 using Mica.Core.Models;
+using Mica.Core.Repositories;
 
 namespace Mica.Core.Builders
 {
     public class SteamAchievementBuilder
     {
         private readonly ISteamClient _steamClient;
+        private ISteamRepository _steamRepository;
 
-        public SteamAchievementBuilder() : this(new SteamClient()) {}
+        public SteamAchievementBuilder() : this(new SteamClient(), new SteamRepository()) {}
 
-        public SteamAchievementBuilder(ISteamClient steamClient)
+        public SteamAchievementBuilder(ISteamClient steamClient, ISteamRepository steamRepository)
         {
             _steamClient = steamClient;
+            _steamRepository = steamRepository;
         }
 
         public List<Achievement> BuildAll(string userName)
@@ -35,7 +38,14 @@ namespace Mica.Core.Builders
         public List<Achievement> BuildFor(string appId, string userName)
         {
             var achievements = _steamClient.GetUserAchievementsForGame(appId, userName);
+
+            if (achievements.Achievements.Count == 0 || achievements.GameInfo == null)
+                return new List<Achievement>();
+
             var earnedAchievements = new List<Achievement>();
+
+            if (_steamRepository.GetGame(achievements.GameInfo.ApplicationId).ToList().Count == 0)
+                _steamRepository.InsertGame(achievements.GameInfo);
 
             foreach (var achievement in achievements.Achievements)
             {

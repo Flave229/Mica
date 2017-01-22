@@ -4,6 +4,7 @@ using Mica.Core.Builders;
 using Mica.Core.Communication;
 using Mica.Core.Communication.Models;
 using Mica.Core.Models;
+using Mica.Core.Repositories;
 using Moq;
 using NUnit.Framework;
 
@@ -18,6 +19,7 @@ namespace GivenARequestForAUsersAchievements
         [SetUp]
         public void Setup()
         {
+            var steamRepositoryMock = new Mock<ISteamRepository>();
             var steamClientMock = new Mock<ISteamClient>();
             steamClientMock.Setup(x => x.GetUserAchievementsForGame(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(new PlayerStatsForGame
@@ -44,7 +46,7 @@ namespace GivenARequestForAUsersAchievements
                     }
                 });
 
-            var subject = new SteamAchievementBuilder(steamClientMock.Object);
+            var subject = new SteamAchievementBuilder(steamClientMock.Object, steamRepositoryMock.Object);
 
             _result = subject.BuildFor("", "");
         }
@@ -70,6 +72,7 @@ namespace GivenARequestForAUsersAchievements
         [SetUp]
         public void Setup()
         {
+            var steamRepositoryMock = new Mock<ISteamRepository>();
             var steamClientMock = new Mock<ISteamClient>();
             steamClientMock.Setup(x => x.GetSteam64IdCode(It.IsAny<string>()))
                 .Returns("229");
@@ -127,7 +130,7 @@ namespace GivenARequestForAUsersAchievements
                     }
                 });
 
-            var subject = new SteamAchievementBuilder(steamClientMock.Object);
+            var subject = new SteamAchievementBuilder(steamClientMock.Object, steamRepositoryMock.Object);
 
             _result = subject.BuildAll("");
         }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Mica.Core.Communication;
 using Mica.Core.Communication.Models;
+using Mica.Core.Repositories;
 using Mica.Core.Services;
 using Moq;
 using NUnit.Framework;
@@ -15,6 +16,7 @@ namespace GivenARequestToStoreAchievements
         [Test]
         public void ThenAllAchievementsAreAddedToTheDatabase()
         {
+            var steamRepositoryMock = new Mock<ISteamRepository>();
             var steamClientMock = new Mock<ISteamClient>();
             steamClientMock.Setup(x => x.GetUserAchievementsForGame(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(new PlayerStatsForGame
@@ -40,7 +42,7 @@ namespace GivenARequestToStoreAchievements
                     }
                 });
 
-            var subject = new SteamService(steamClientMock.Object);
+            var subject = new SteamService(steamClientMock.Object, steamRepositoryMock.Object);
 
             var result = subject.UpdateSteamAchievementsFor("211420", "flave_229");
         }
