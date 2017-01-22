@@ -48,5 +48,11 @@ namespace Mica.Core.Communication
                 return xmlSerializer.Deserialize(reader) as PlayerStatsForGame;
             }
         }
+
+        public GameListResponse GetOwnedGameListFor(string userId)
+        {
+            var gameListResponse = Connect("http://api.steampowered.com", $"IPlayerService/GetOwnedGames/v0001/?key={_authKey}&steamid={userId}&format=json");
+            return JsonConvert.DeserializeObject<GameListResponse>(gameListResponse.Content);
+        }
     }
 }

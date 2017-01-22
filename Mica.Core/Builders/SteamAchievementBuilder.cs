@@ -17,7 +17,22 @@ namespace Mica.Core.Builders
             _steamClient = steamClient;
         }
 
-        public List<Achievement> Build(string appId, string userName)
+        public List<Achievement> BuildAll(string userName)
+        {
+            var userId = _steamClient.GetSteam64IdCode(userName);
+            var games = _steamClient.GetOwnedGameListFor(userId);
+
+            var achievements = new List<Achievement>();
+
+            foreach (var game in games.response.games)
+            {
+                achievements.AddRange(BuildFor(game.appid.ToString(), userName));
+            }
+
+            return achievements.OrderByDescending(x => x.Achieved).ToList();
+        }
+
+        public List<Achievement> BuildFor(string appId, string userName)
         {
             var achievements = _steamClient.GetUserAchievementsForGame(appId, userName);
             var earnedAchievements = new List<Achievement>();

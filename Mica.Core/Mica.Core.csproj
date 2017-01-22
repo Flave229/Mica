@@ -49,12 +49,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Builders\SteamAchievementBuilder.cs" />
+    <Compile Include="Communication\Models\GameList.cs" />
+    <Compile Include="Communication\Models\GameListResponse.cs" />
     <Compile Include="Communication\ISteamClient.cs" />
-    <Compile Include="Communication\Models\SteamGameInfo.cs" />
     <Compile Include="Communication\Models\PlayerStatsForGame.cs" />
     <Compile Include="Communication\SteamClient.cs" />
     <Compile Include="Communication\Models\VanityUrlInfo.cs" />
     <Compile Include="Communication\Models\VanityUrlResponse.cs" />
+    <Compile Include="Communication\Models\SteamGame.cs" />
     <Compile Include="Models\Achievement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\SteamAchievementRepository.cs" />

@@ -20,7 +20,7 @@ namespace Mica.Core.Services
         public List<Achievement> UpdateSteamAchievementsFor(string appId, string userId)
         {
             var steamBuilder = new SteamAchievementBuilder(_steamClient);
-            var achievements = steamBuilder.Build(appId, userId);
+            var achievements = steamBuilder.BuildFor(appId, userId);
 
             return achievements;
         }

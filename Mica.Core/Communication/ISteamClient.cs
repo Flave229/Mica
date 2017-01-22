@@ -8,5 +8,6 @@ namespace Mica.Core.Communication
         IRestResponse Connect(string baseUrl, string resource);
         string GetSteam64IdCode(string vanityName);
         PlayerStatsForGame GetUserAchievementsForGame(string appId, string userId);
+        GameListResponse GetOwnedGameListFor(string userId);
     }
 }
