@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Xml.Serialization;
 using Mica.Core.Communication.Models;
 using Newtonsoft.Json;
@@ -32,7 +33,8 @@ namespace Mica.Core.Communication
 
         public string GetSteam64IdCode(string vanityName)
         {
-            var userCodeResponse = Connect("http://api.steampowered.com", $"ISteamUser/ResolveVanityURL/v0001/?key={_authKey}&vanityUrl={vanityName}");
+            var userCodeResponse = Connect("http://api.steampowered.com",
+                $"ISteamUser/ResolveVanityURL/v0001/?key={_authKey}&vanityUrl={vanityName}");
             var userCodeInfo = JsonConvert.DeserializeObject<VanityUrlResponse>(userCodeResponse.Content);
 
             return userCodeInfo.response.success == 0 ? "" : userCodeInfo.response.steamid;
@@ -42,10 +44,21 @@ namespace Mica.Core.Communication
         {
             var userStatsResponse = Connect("http://steamcommunity.com", $"id/{userName}/stats/{appId}/achievements/?xml=1");
             var xmlSerializer = new XmlSerializer(typeof(PlayerStatsForGame));
-            
+
             using (TextReader reader = new StringReader(userStatsResponse.Content))
             {
-                return xmlSerializer.Deserialize(reader) as PlayerStatsForGame;
+                try
+                {
+                    var gameUrlId = userStatsResponse.ResponseUri.Segments.Last();
+                    if (gameUrlId.Contains("/"))
+                        return xmlSerializer.Deserialize(reader) as PlayerStatsForGame;
+
+                    return GetUserAchievementsForGame(gameUrlId, userName);
+                }
+                catch (Exception)
+                {
+                    return new PlayerStatsForGame();
+                }
             }
         }
 

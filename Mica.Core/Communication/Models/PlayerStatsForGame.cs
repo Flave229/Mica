@@ -8,6 +8,11 @@ namespace Mica.Core.Communication.Models
     [XmlRoot("playerstats")]
     public class PlayerStatsForGame
     {
+        public PlayerStatsForGame()
+        {
+            Achievements = new List<PlayerAchievement>();
+        }
+
         [XmlArray("achievements")]
         [XmlArrayItem("achievement", typeof(PlayerAchievement))]
         public List<PlayerAchievement> Achievements { get; set; }
