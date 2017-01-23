@@ -10,7 +10,7 @@ namespace Mica.Core.Builders
     public class SteamAchievementBuilder
     {
         private readonly ISteamClient _steamClient;
-        private ISteamRepository _steamRepository;
+        private readonly ISteamRepository _steamRepository;
 
         public SteamAchievementBuilder() : this(new SteamClient(), new SteamRepository()) {}
 
@@ -44,22 +44,34 @@ namespace Mica.Core.Builders
 
             var earnedAchievements = new List<Achievement>();
 
-            if (_steamRepository.GetGame(achievements.GameInfo.ApplicationId).ToList().Count == 0)
+            var matchingGame = _steamRepository.GetGame(achievements.GameInfo.ApplicationId).ToList();
+
+            if (matchingGame.Count == 0)
+            {
                 _steamRepository.InsertGame(achievements.GameInfo);
+                matchingGame = _steamRepository.GetGame(achievements.GameInfo.ApplicationId).ToList();
+            }
 
             foreach (var achievement in achievements.Achievements)
             {
                 if (achievement.Achieved == 0)
                     continue;
 
-                earnedAchievements.Add(new Achievement
+                var parsedAchievement = new Achievement
                 {
-                    AchievementName = achievement.Name,
+                    Name = achievement.Name,
+                    ApiName = achievement.ApiName,
                     GameName = achievements.GameInfo.Name,
+                    Description = achievement.Description,
                     AchievementUrl = $"http://steamcommunity.com/id/flave_229/stats/{appId}/achievements/",
                     IconUrl = achievement.IconUrl,
                     Achieved = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).AddSeconds(double.Parse(achievement.AchievedTimestamp))
-                });
+                };
+                
+                if (_steamRepository.GetAchievement(achievement.ApiName) != null)
+                    _steamRepository.InsertAchievement(parsedAchievement, matchingGame.First().Id);
+
+                earnedAchievements.Add(parsedAchievement);
             }
 
             return earnedAchievements.OrderByDescending(x => x.Achieved).ToList();

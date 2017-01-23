@@ -8,8 +8,7 @@ using Mica.Core.Repositories;
 using Moq;
 using NUnit.Framework;
 
-// ReSharper disable once CheckNamespace
-namespace GivenARequestForAUsersAchievements
+namespace Mica.Tests.Core.GivenASteamApiRequestForAUsersAchievements
 {
     [TestFixture]
     public class WhenTheUserHasCompletedHalfOfTheAchievements
@@ -60,7 +59,7 @@ namespace GivenARequestForAUsersAchievements
         [Test]
         public void ThenTheAchievedAchievementIsReturned()
         {
-            Assert.That(_result.FirstOrDefault()?.AchievementName, Is.EqualTo("AchievementDisplayName1"));
+            Assert.That(_result.FirstOrDefault()?.Name, Is.EqualTo("AchievementDisplayName1"));
         }
     }
     
@@ -138,8 +137,8 @@ namespace GivenARequestForAUsersAchievements
         [Test]
         public void ThenAchievementsForBothGamesAreReturned()
         {
-            Assert.That(_result.ElementAt(0).AchievementName, Is.EqualTo("AchievementDisplayName1"));
-            Assert.That(_result.ElementAt(1).AchievementName, Is.EqualTo("AchievementDisplayName2"));
+            Assert.That(_result.ElementAt(0).Name, Is.EqualTo("AchievementDisplayName1"));
+            Assert.That(_result.ElementAt(1).Name, Is.EqualTo("AchievementDisplayName2"));
         }
     }
 }

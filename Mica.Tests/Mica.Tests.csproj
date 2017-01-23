@@ -52,8 +52,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\Communication\UserAchievementTests.cs" />
-    <Compile Include="Core\Repositories\SteamAchievementsDatabaseTests.cs" />
+    <Compile Include="Core\GivenASteamApiRequestForAUsersAchievements\UserAchievementTests.cs" />
+    <Compile Include="Core\GivenARequestToStoreAchievements\WhenAllTheAchievementsAreNew.cs" />
+    <Compile Include="Core\GivenARequestToStoreAchievements\WhenAExistingGameIsRequested.cs" />
+    <Compile Include="Core\GivenARequestToStoreAchievements\WhenANewGameIsRequested.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

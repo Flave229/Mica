@@ -11,9 +11,9 @@ namespace Mica.Core.Repositories
     public interface ISteamRepository
     {
         void InsertGame(GameInfo game);
-        void InsertAchievements(List<Achievement> achievements);
-        void GetAchievements();
+        void InsertAchievement(Achievement achievement, int gameApplicationId);
         IEnumerable<MicaGame> GetGame(string gameInfoApplicationId);
+        IEnumerable<Achievement> GetAchievement(string achievementApiName);
     }
 
     public class SteamRepository : ISteamRepository
@@ -24,10 +24,13 @@ namespace Mica.Core.Repositories
         {
             var userFileContents = File.ReadAllLines((AppDomain.CurrentDomain.BaseDirectory + @"Auth\DatabaseUser.txt"));
             var user = string.Join("", userFileContents);
-            var passwordFileContents = File.ReadAllLines((AppDomain.CurrentDomain.BaseDirectory + @"Auth\DatabasePass.txt"));
+            var passwordFileContents =
+                File.ReadAllLines((AppDomain.CurrentDomain.BaseDirectory + @"Auth\DatabasePass.txt"));
             var password = string.Join("", passwordFileContents);
 
-            _connection = new SqlConnection($"Server=tcp:micaflave.database.windows.net,1433;Initial Catalog=MicaSQL;Persist Security Info=False;User ID={user};Password={password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+            _connection =
+                new SqlConnection(
+                    $"Server=tcp:micaflave.database.windows.net,1433;Initial Catalog=MicaSQL;Persist Security Info=False;User ID={user};Password={password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
         }
 
         public void InsertGame(GameInfo game)
@@ -38,13 +41,45 @@ namespace Mica.Core.Repositories
 
                 _connection.Open();
                 var command = new SqlCommand("INSERT INTO SteamGames (AppId, Name, IconUrl) " +
-                                             $"VALUES ('{game.ApplicationId}', '{game.Name}', '{game.IconUrl}')", _connection);
+                                             $"VALUES ('{game.ApplicationId}', '{game.Name}', '{game.IconUrl}')",
+                    _connection);
 
                 command.ExecuteNonQuery();
             }
             catch (Exception exception)
             {
-                throw new Exception("Failed to insert Steam game into the database", exception);
+                throw new Exception($"Failed to insert Steam game '{game.Name}' into the database", exception);
+            }
+            finally
+            {
+                _connection?.Close();
+            }
+        }
+
+        public void InsertAchievement(Achievement achievement, int gameApplicationId)
+        {
+            try
+            {
+                achievement.ApiName = achievement.ApiName.Replace("'", "''");
+                achievement.Name = achievement.Name.Replace("'", "''");
+                achievement.Description = achievement.Description.Replace("'", "''");
+
+                _connection.Open();
+                var command = new SqlCommand("INSERT INTO SteamAchievements (ApiName, DisplayName, GameId, Description, AchievementUrl, IconUrl, Achieved) " +
+                                             $"VALUES ('{achievement.ApiName}'," +
+                                             $"'{achievement.Name}'," +
+                                             $"'{gameApplicationId}'," +
+                                             $"'{achievement.Description}'," +
+                                             $"'{achievement.AchievementUrl}'," +
+                                             $"'{achievement.IconUrl}'," +
+                                             $"'{achievement.Achieved:MM/dd/yyyy hh:mm:ss}')",
+                    _connection);
+
+                command.ExecuteNonQuery();
+            }
+            catch (Exception exception)
+            {
+                throw new Exception($"Failed to insert Steam achievement '{achievement.Name}' into the database", exception);
             }
             finally
             {
@@ -65,7 +100,6 @@ namespace Mica.Core.Repositories
 
                 while (sqlReader.Read())
                 {
-                    var test = (string) sqlReader["AppId"];
                     yield return MicaGame.Create(sqlReader);
                 }
             }
@@ -76,21 +110,33 @@ namespace Mica.Core.Repositories
             }
         }
 
-        public void InsertAchievements(List<Achievement> achievements)
+        public IEnumerable<Achievement> GetAchievement(string achievementApiName)
         {
-            
-        }
-
-        public void GetAchievements()
-        {
+            SqlDataReader sqlReader = null;
             try
             {
                 _connection.Open();
-                var command = new SqlCommand("SELECT * FROM SteamGames");
+                var command = new SqlCommand("SELECT SteamAchievements.Id, " +
+                                             "SteamAchievements.ApiName, " +
+                                             "SteamAchievements.DisplayName, " +
+                                             "SteamAchievements.IconUrl, " +
+                                             "SteamAchievements.Achieved, " +
+                                             "SteamGames.Name AS GameName " +
+                                             "FROM SteamAchievements " +
+                                             "LEFT OUTER JOIN SteamGames ON SteamGames.Id = SteamAchievements.GameId" +
+                                             $"WHERE ApiName = '{achievementApiName}'", _connection);
+
+                sqlReader = command.ExecuteReader();
+
+                while (sqlReader.Read())
+                {
+                    yield return Achievement.Create(sqlReader);
+                }
             }
-            catch (Exception exception)
+            finally
             {
-                
+                sqlReader?.Close();
+                _connection?.Close();
             }
         }
     }
